@@ -8,7 +8,6 @@ import org.junit.Test;
 import org.mockito.InjectMocks;
 
 public class KnowledgeBaseTest {
-
 	@InjectMocks
 	private KnowledgeBase knowledgeBase;
 
@@ -18,10 +17,27 @@ public class KnowledgeBaseTest {
 	}
 
 	@Test
-	public void test() {
-
-		Assert.assertTrue(this.knowledgeBase.answer("varon (javier)."));
-
+	public void testFactIsNotInDB() {
+		Assert.assertFalse(this.knowledgeBase.answer("varon (javier)."));
 	}
 
+	public void testFactIsInDB() {
+		Assert.assertTrue(this.knowledgeBase.answer("varon(juan)."));
+	}
+
+	public void testDaughterRuleIsNotInDB() {
+		Assert.assertFalse(this.knowledgeBase.answer("hija(juan, pepe)."));
+	}
+
+	public void testDaughterRuleIsInDB() {
+		Assert.assertTrue(this.knowledgeBase.answer("hijo(pepe, juan)."));
+	}
+
+	public void testUncleRuleIsNotInDB() {
+		Assert.assertFalse(this.knowledgeBase.answer("tio(maria, pepe, juan)."));
+	}
+
+	public void testUncleRuleIsInDB() {
+		Assert.assertTrue(this.knowledgeBase.answer("tio(nicolas, alejandro, roberto)."));
+	}
 }
